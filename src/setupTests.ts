@@ -1,6 +1,6 @@
 /*
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: liyulong
  * @Date: 2020-05-14 09:23:43
  * @LastEditors: liyulong
@@ -8,4 +8,5 @@
  */
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+
 configure({ adapter: new Adapter() });

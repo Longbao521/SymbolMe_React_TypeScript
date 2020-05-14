@@ -1,0 +1,4 @@
+bak/*.tsx
+config/*.js
+config/jest/*.js
+build/*.js

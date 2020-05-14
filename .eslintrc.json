@@ -1,0 +1,14 @@
+{
+    "parser": "@typescript-eslint/parser",    // 转成语法树
+    "plugins": [
+        "@typescript-eslint/eslint-plugin"
+    ],
+    "extends": [
+        "plugin:@typescript-eslint/recommended"  // 继承官方推荐设置
+    ],
+    "rules": {                                   // 对官方规则进行修改
+        "@typescript-eslint/no-var-requires": "off",
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": ["error"]
+    }
+}
