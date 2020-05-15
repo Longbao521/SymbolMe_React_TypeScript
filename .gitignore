@@ -11,6 +11,9 @@
 # production
 /build
 
+# 本地备份
+/bak
+
 # misc
 .DS_Store
 .env.local
