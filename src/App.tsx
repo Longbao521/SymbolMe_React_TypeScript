@@ -1,30 +1,79 @@
-import React, { ReactElement } from 'react';
-import { DatePicker, Layout } from 'antd';
+import React, { ReactElement, useState } from 'react';
+import { Layout, Menu, Button } from 'antd';
+import {
+  IdcardOutlined,
+  GlobalOutlined,
+  ScheduleOutlined,
+  UserSwitchOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined
+} from '@ant-design/icons';
 // 引入路由
 import { Route, Link, Redirect, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { Login, PersonalInfo } from './views'
-import { Header, Sider, Content } from './components/Layout'
 import history from './stores/history'
 
+import './App.less'
+
+const { Sider, Content } = Layout
+const { SubMenu } = Menu
+
 export default function App(): ReactElement {
+
+  const [collapsed, setCollapsed] = useState(false)
+  const [navList] = useState([
+    { key: '1', path: '/personInfo', icon: <IdcardOutlined />, text: '个人信息' },
+    {
+      key: '2', path: '/project', icon: <UserSwitchOutlined />, text: '项目经历', children: [
+        { key: '2.1', path: '/project/deepEarth', text: '深时地球' },
+        { key: '2.2', path: '/project/DDG', text: '全球离散格网' },
+      ]
+    },
+    { key: '3', path: '/skill', icon: <ScheduleOutlined />, text: '技术栈' },
+    { key: '4', path: '/cesium', icon: <GlobalOutlined />, text: 'Cesium平台' },
+  ])
+
   return (
-    <Layout>
-      <Header>
-        {/** ConnectedRouter是Redux与Router的结合，实现用Redux来操作路由 */}
-        <ConnectedRouter history={history}>
-          <Link to="/login">登录</Link>
-          <Link to="/personInfo">个人信息</Link>
+    <ConnectedRouter history={history}>
+      <Layout>
+        <Sider trigger={null} collapsible collapsed={collapsed}>
+          <Menu
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            mode="inline"
+            theme="dark"
+          >
+            {
+              navList.map(elem => {
+                console.log(elem)
+                return elem.children ?
+                  <SubMenu key={elem.key} icon={elem.icon} title={elem.text}>
+                    {
+                      elem.children.map(elemChild => (
+                        <Menu.Item key={elemChild.key}>{ elemChild.text }</Menu.Item>
+                      ))
+                    }
+                  </SubMenu>
+                  :
+                  <Menu.Item key={elem.key} icon={elem.icon}>
+                    <Link to={elem.path}>{ elem.text }</Link>
+                  </Menu.Item>
+              })
+            }
+          </Menu>
+        </Sider>
+        <Content>
+          <Button type="primary" onClick={() => setCollapsed(!collapsed)} style={{ marginBottom: 16 }}>
+            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
+          </Button>
           <Switch>
-            <Route path="/login" component={ Login }/>
-            <Route path="/personInfo" component = { PersonalInfo }/>
+            <Route path="/login" component={Login} />
+            <Route path="/personInfo" component={PersonalInfo} />
             <Redirect to="/login" />
           </Switch>
-        </ConnectedRouter>
-      </Header>
-      <Content>
-
-      </Content>
-    </Layout>
+        </Content>
+      </Layout>
+    </ConnectedRouter>
   );
 }
