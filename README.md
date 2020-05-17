@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-14 08:25:31
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-15 11:03:18
+ * @LastEditTime: 2020-05-17 08:05:48
  -->
 # my-app-ts
 
@@ -32,7 +32,22 @@
     + 加入eslintignore, .eslintrc.json 
     + 加入eslint命令
 + 引入Router
+    + yarn add react-router-dom @types/react-router-dom connected-react-router
 + 引入Redux
     + yarn add redux react-redux @types/react-redux redux-logger redux-promise redux-thunk @types/redux-logger @types/redux-promise --dev
     + 在store的入口文件中，使用中间件，创建加强版storeCreator，使用reducer创建store
 **rm -rf node_modules 可以很快删除所有依赖**
+
+## 宽高成比例
+### 盒子成比例
+```css
+// 实现盒子的高度与宽度成比例
+.container:before {
+    content: "";
+    display: inline-block;
+    padding-bottom: 100%;
+    width: .1px;
+    vertical-align: middle;
+}
+```
++  img 宽高成1：1，只需要不设置高度即可

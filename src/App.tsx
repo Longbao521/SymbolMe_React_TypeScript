@@ -13,8 +13,11 @@ import { Route, Link, Redirect, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { Login, PersonalInfo } from './views'
 import history from './stores/history'
+// 引入组件
+import { PhotoContainer } from  './components'
 
 import './App.less'
+import logoImg from './assets/img/login.svg'
 
 const { Sider, Content } = Layout
 const { SubMenu } = Menu
@@ -38,6 +41,7 @@ export default function App(): ReactElement {
     <ConnectedRouter history={history}>
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
+          <PhotoContainer width="50%" src={ logoImg }  />
           <Menu
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}

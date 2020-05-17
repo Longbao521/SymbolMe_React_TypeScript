@@ -1,0 +1,25 @@
+.container {
+    border-radius: 45%;
+    border: 2px solid #eee;
+    box-shadow: 0 0 10px #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #606c88;
+    width: 50%;
+    margin:25% 25%;  // 盒子的视屏举重
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3f4c6b, #606c88);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+// 实现盒子的高度与宽度成比例
+.container:before {
+    content: "";
+    display: inline-block;
+    padding-bottom: 100%;
+    width: .1px;
+    vertical-align: middle;
+}
