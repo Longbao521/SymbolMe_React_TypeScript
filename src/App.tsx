@@ -38,18 +38,18 @@ export default function App(): ReactElement {
 
   const [theme, setTheme] = useState<ThemeType>('light')
   // useState本身可以通过传入函数作为state的初始值，所以必须要包裹一层
-  const [switchTheme] = useState(() => {return  (): void => {
-      const newTheme: ThemeType = theme === 'light' ? 'dark' : 'light'
-      setTheme(newTheme)
-  }})
+  // const [switchTheme] = useState(() => {return  (): void => {
+  //     FIXME:这个只在初始化时完成，相当于构造函数
+  //     // const newTheme: ThemeType = 
+  //     setTheme(theme === 'light' ? 'dark' : 'light')
+  // }})
   return (
     <ConnectedRouter history={history}>
-      <ThemeContext.Provider value={{theme, switchTheme}}>
+      <ThemeContext.Provider value={{theme, setTheme}}>
         <Layout>
           <Sider collapsed={collapsed}>
             {
               navList.map(elem => {
-                console.log(elem)
                 return elem.children ?
                   <SubMenu key={elem.key} icon={elem.icon} title={elem.text}>
                     {

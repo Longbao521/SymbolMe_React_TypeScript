@@ -17,13 +17,14 @@ export default function SwitchLight(): ReactElement {
             tmpArr.push('daySwitch')
             setSwitchClass(tmpArr.join(" "))
         }
+
     }
     return (
         <ThemeContext.Consumer>
             {
-                ({theme, switchTheme}): ReactChild => (
+                ({theme, setTheme}): ReactChild => (
                     <div id="dayNightSwitch" >
-                    <div className={switchClass} onClick={(): void => { handleClick(); switchTheme() }}>
+                    <div className={switchClass} onClick={(): void => { handleClick(); setTheme ? setTheme(theme === 'light' ? 'dark' : 'light') : setTheme }}>
                         <div className="star sky"></div>
                         <div className="sunMoon">
                             <div className="crater crater1"></div>

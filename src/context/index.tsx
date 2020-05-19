@@ -4,12 +4,11 @@ export type ThemeType = 'dark' | 'light' | undefined
 
 export interface ThemeContextType {
     theme: ThemeType;
-    switchTheme: () => void;
+    setTheme?: React.Dispatch<React.SetStateAction<ThemeType>>;
 }
 
 const initThemeContext: ThemeContextType = {
     theme: 'dark',
-    switchTheme: () => {}
 }
 
 export const ThemeContext = createContext(initThemeContext)

@@ -15,7 +15,7 @@ export default function Sider(props: Props): ReactElement {
   return (
     <ThemeContext.Consumer>
       {
-        ({ theme, switchTheme }): ReactChild => (
+        ({ theme, setTheme }): ReactChild => (
           <Layout.Sider trigger={null} collapsible collapsed={props.collapsed} theme={theme}>
             <PhotoContainer width="50%" src={logoImg} />
             <Menu
