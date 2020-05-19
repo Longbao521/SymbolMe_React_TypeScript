@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, createContext } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Layout, Menu, Button } from 'antd';
 import {
   IdcardOutlined,
@@ -13,14 +13,14 @@ import { Login, PersonalInfo } from './views'
 import history from './stores/history'
 // 引入组件
 import { PhotoContainer, Sider, Content } from './components'
+import { ThemeContext, ThemeType } from './context/index';
 
 import './App.less'
 import logoImg from './assets/img/login.svg'
 
 const { SubMenu } = Menu
 
-// TODO:使用Context来传递theme全局属性
-const ThemeContext = createContext('light')
+
 
 export default function App(): ReactElement {
   const [collapsed, setCollapsed] = useState(false)
@@ -36,9 +36,15 @@ export default function App(): ReactElement {
     { key: '4', path: '/cesium', icon: <GlobalOutlined />, text: 'Cesium平台' },
   ])
 
+  const [theme, setTheme] = useState<ThemeType>('light')
+  // useState本身可以通过传入函数作为state的初始值，所以必须要包裹一层
+  const [switchTheme] = useState(() => {return  (): void => {
+      const newTheme: ThemeType = theme === 'light' ? 'dark' : 'light'
+      setTheme(newTheme)
+  }})
   return (
     <ConnectedRouter history={history}>
-      <ThemeContext.Provider value="light">
+      <ThemeContext.Provider value={{theme, switchTheme}}>
         <Layout>
           <Sider collapsed={collapsed}>
             {

@@ -17,7 +17,7 @@ interface Props {
 export default function Content(props: Props): ReactElement {
     return (
         <Layout.Content>
-          <Button type="primary" onClick={() => props.setCollapsed(!props.collapsed)} style={{ marginBottom: 16 }}>
+          <Button type="primary" onClick={(): void => props.setCollapsed(!props.collapsed)} style={{ marginBottom: 16 }}>
             {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
           </Button>
           <SwitchLight />
