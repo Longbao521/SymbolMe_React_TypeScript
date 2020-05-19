@@ -19,6 +19,7 @@ export default function SwitchLight(): ReactElement {
         }
 
     }
+    // 接受context，context中可接受相对应的set函数
     return (
         <ThemeContext.Consumer>
             {

@@ -22,7 +22,7 @@ export default function Sider(props: Props): ReactElement {
               defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1']}
               mode="inline"
-              theme="dark"
+              theme={theme}
             >
               {props.children}
             </Menu>
