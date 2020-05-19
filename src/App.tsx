@@ -1,12 +1,10 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, createContext } from 'react';
 import { Layout, Menu, Button } from 'antd';
 import {
   IdcardOutlined,
   GlobalOutlined,
   ScheduleOutlined,
-  UserSwitchOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined
+  UserSwitchOutlined
 } from '@ant-design/icons';
 // 引入路由
 import { Route, Link, Redirect, Switch } from 'react-router-dom'
@@ -14,16 +12,17 @@ import { ConnectedRouter } from 'connected-react-router'
 import { Login, PersonalInfo } from './views'
 import history from './stores/history'
 // 引入组件
-import { PhotoContainer } from  './components'
+import { PhotoContainer, Sider, Content } from './components'
 
 import './App.less'
 import logoImg from './assets/img/login.svg'
 
-const { Sider, Content } = Layout
 const { SubMenu } = Menu
 
-export default function App(): ReactElement {
+// TODO:使用Context来传递theme全局属性
+const ThemeContext = createContext('light')
 
+export default function App(): ReactElement {
   const [collapsed, setCollapsed] = useState(false)
   const [navList] = useState([
     { key: '1', path: '/personInfo', icon: <IdcardOutlined />, text: '个人信息' },
@@ -39,15 +38,9 @@ export default function App(): ReactElement {
 
   return (
     <ConnectedRouter history={history}>
-      <Layout>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
-          <PhotoContainer width="50%" src={ logoImg }  />
-          <Menu
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            mode="inline"
-            theme="dark"
-          >
+      <ThemeContext.Provider value="light">
+        <Layout>
+          <Sider collapsed={collapsed}>
             {
               navList.map(elem => {
                 console.log(elem)
@@ -55,29 +48,26 @@ export default function App(): ReactElement {
                   <SubMenu key={elem.key} icon={elem.icon} title={elem.text}>
                     {
                       elem.children.map(elemChild => (
-                        <Menu.Item key={elemChild.key}>{ elemChild.text }</Menu.Item>
+                        <Menu.Item key={elemChild.key}>{elemChild.text}</Menu.Item>
                       ))
                     }
                   </SubMenu>
                   :
                   <Menu.Item key={elem.key} icon={elem.icon}>
-                    <Link to={elem.path}>{ elem.text }</Link>
+                    <Link to={elem.path}>{elem.text}</Link>
                   </Menu.Item>
               })
             }
-          </Menu>
-        </Sider>
-        <Content>
-          <Button type="primary" onClick={() => setCollapsed(!collapsed)} style={{ marginBottom: 16 }}>
-            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-          </Button>
-          <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/personInfo" component={PersonalInfo} />
-            <Redirect to="/login" />
-          </Switch>
-        </Content>
-      </Layout>
+          </Sider>
+          <Content collapsed={collapsed} setCollapsed={setCollapsed}>
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/personInfo" component={PersonalInfo} />
+              <Redirect to="/login" />
+            </Switch>
+          </Content>
+        </Layout>
+      </ThemeContext.Provider>
     </ConnectedRouter>
   );
 }

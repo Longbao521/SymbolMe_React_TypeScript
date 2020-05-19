@@ -1,0 +1,189 @@
+@keyframes cloudAnim {
+    0% {
+        transform: translatex(0px);
+    }
+    14% {
+        transform: translate(5px);
+    }
+
+    56% {
+        transform: translatex(-10px);
+    }
+
+    100% {
+        transform: translatex(0px);
+    }
+}
+
+#dayNightSwitch {
+    display: inline-block;
+    position: absolute;
+    z-index: 3;
+    right: 20px;
+    top: 25px;
+    opacity: .65;
+
+    .onOff.daySwitch {
+        border: 2px solid #52a6bf;
+
+        .sunMoon {
+            background: #ffdf61;
+            border: 2px solid #d9b31c;
+            left: calc(100% - 23px);
+
+            .crater {
+                transform: scale(0)!important;
+            }
+
+            .cloud {
+                opacity: 1;
+                transform: translatex(0px);
+                transition-delay: .2s;
+                animation: cloudAnim 2.5s linear infinite;
+            }
+        }
+
+        .sky {
+            width: 65px;
+            height: 25px;
+            border-radius: 25px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translate(0px, 0px);
+            animation: none !important;
+        }
+    }
+
+    .onOff {
+        background: #324164;
+        width: 65px;
+        height: 25px;
+        border-radius: 25px;
+        box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.1);
+        border: 2px solid #1e2d50;
+        overflow: hidden;
+        position: relative;
+
+        .sunMoon {
+            background: #f0e1a5;
+            height: 16px;
+            width: 16px;
+            border-radius: 100%;
+            border: 2px solid #ccc091;
+            position: absolute;
+            left: 3px;
+            top: 2.5px;
+
+            .crater {
+                background: #ccc091;
+                width: 5px;
+                height: 5px;
+                border-radius: 13px;
+                position: absolute;
+                left: 50%;
+                top: 20%;
+            }
+            .crater.crater1 {
+                left: 30%;
+                top: 45%;
+                transform: scale(0.5);
+            }
+            .creater.crater2 {
+                left: 55%;
+                top: 60%;
+                transform: scale(0.7);
+            }
+
+            .cloud {
+                background: white;
+                border-radius: 3px;
+                position: absolute;
+                opacity: 0;
+                transform: translatex(-20px);
+                transition-delay: 0s;
+            }
+
+            .cloud.part1 {
+                width: 20px;
+                height: 2px;
+                left: -12px;
+                top: calc(50% - 1.5px);
+            }
+
+            .cloud.part1:before {
+                content: "";
+                background: white;
+                border-radius: 3px;
+                position: absolute;
+                width: 3px;
+                height: 3px;
+                left: 40%;
+                top: -100%;
+            }
+            
+            .cloud.part1:after {
+                content: "";
+                background: white;
+                border-radius: 3px;
+                position: absolute;
+                width: 15px;
+                height: 2px;
+                left: 20%;
+                top: -200%;
+            }
+        }
+
+        .star {
+            background: #5ebedb;
+            width: 5px;
+            height: 5px;
+            border-radius: 5px;
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            transform: translate(20px, 5px);
+        }
+
+        * {
+            transition: all .4s ease;
+        }
+    }
+
+    // .sky {
+    //     width: 65px;
+    //     height: 25px;
+    //     border-radius: 25px;
+    //     position: absolute;
+    //     left: 0;
+    //     top: 0;
+    //     transform: translate(0px, 0px);
+    //     animation: none !important;
+    // }
+
+    // .star {
+    //     background: #5ebedb;
+    //     width: 5px;
+    //     height: 5px;
+    //     border-radius: 5px;
+    //     position: absolute;
+    //     left: 50%;
+    //     top: 10%;
+    //     transform: translate(20px, 5px);
+    // }
+
+    // .sunMoon {
+    //     background: #f0e1a5;
+    //     height: 16px;
+    //     width: 16px;
+    //     border-radius: 100%;
+    //     border: 2px solid #ccc091;
+    //     position: absolute;
+    //     left: 3px;
+    //     top: 2.5px;
+    // }
+}
+
+#dayNightSwitch:hover {
+    cursor: pointer;
+}

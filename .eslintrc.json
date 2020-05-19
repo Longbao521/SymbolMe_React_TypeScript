@@ -9,6 +9,6 @@
     "rules": {                                   // 对官方规则进行修改
         "@typescript-eslint/no-var-requires": "off",
         "no-empty-function": "off",
-        "@typescript-eslint/no-empty-function": ["error"]
+        "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }]
     }
 }
