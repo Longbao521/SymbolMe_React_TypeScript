@@ -4,7 +4,7 @@ import { Layout, Menu, Button } from 'antd';
 // 引入路由
 import { Route, Link, Redirect, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
-import { Login, PersonalInfo } from './views'
+import { Login, PersonalInfo, NotFound } from './views'
 import history from './stores/history'
 // 引入组件
 import { PhotoContainer, Sider, Content } from './components'
@@ -16,8 +16,6 @@ import './App.less'
 import logoImg from './assets/img/login.svg'
 
 const { SubMenu } = Menu
-
-
 
 export default function App(): ReactElement {
   const [collapsed, setCollapsed] = useState(false)
@@ -56,7 +54,8 @@ export default function App(): ReactElement {
             <Switch>
               <Route path="/login" component={Login} />
               <Route path="/personInfo" component={PersonalInfo} />
-              <Redirect to="/login" />
+              <Route path="/404" component={NotFound} />
+              <Redirect to="/404" />
             </Switch>
           </Content>
         </Layout>
