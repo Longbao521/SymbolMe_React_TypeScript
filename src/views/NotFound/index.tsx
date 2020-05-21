@@ -3,7 +3,7 @@ import './index.less'
 
 export default function index(): ReactElement {
     return (
-        <div className="container">
+        <div className="container404">
             <div className="error404page">
                 <div className="newcharacter404">
                     <div className="chair404"></div>

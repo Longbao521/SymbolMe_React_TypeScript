@@ -7,7 +7,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { Login, PersonalInfo, NotFound } from './views'
 import history from './stores/history'
 // 引入组件
-import { PhotoContainer, Sider, Content } from './components'
+import { PhotoContainer, Sider, Content, Background } from './components'
 import { ThemeContext, ThemeType } from './context/index';
 // 引入常量
 import { NavList } from './constant'
@@ -51,6 +51,7 @@ export default function App(): ReactElement {
             }
           </Sider>
           <Content collapsed={collapsed} setCollapsed={setCollapsed}>
+            <Background color="0, 0, 0"/>
             <Switch>
               <Route path="/login" component={Login} />
               <Route path="/personInfo" component={PersonalInfo} />

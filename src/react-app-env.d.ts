@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: liyulong
+ * @Date: 2020-05-14 08:25:41
+ * @LastEditors: liyulong
+ * @LastEditTime: 2020-05-21 13:45:34
+ */ 
 // / <reference types="node" />
 // / <reference types="react" />
 // / <reference types="react-dom" />
@@ -64,3 +72,5 @@ declare module '*.module.sass' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
+
+declare type Omit<T, K> = Pick<T, Exclude<keyof T, K>>

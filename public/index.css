@@ -3,3 +3,8 @@
     background-color: #b598a1;
     overflow: hidden;
 }
+
+body {
+    padding: 0;
+    margin: 0;
+}
