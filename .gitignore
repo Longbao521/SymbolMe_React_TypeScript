@@ -15,7 +15,7 @@
 /bak
 
 # 隐私数据
-/mock/db.json
+mock/db.json
 
 # misc
 .DS_Store
