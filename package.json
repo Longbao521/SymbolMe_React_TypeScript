@@ -84,7 +84,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "eslint": "eslint src --ext .js,.ts,.tsx --fix",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "mock": "json-server --routes mock/route.json --watch mock/db.json --port 3003"
   },
   "eslintConfig": {
     "extends": "react-app"
