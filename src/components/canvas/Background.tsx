@@ -1,7 +1,6 @@
 import React, { Component, RefObject, MouseEvent } from 'react'
 import { withDefaultProps } from '../../utils';
 import './Background.less'
-import { Dispatch } from 'redux';
 
 const defaultProps = {
     vx: 4,
@@ -124,7 +123,7 @@ export default withDefaultProps(
 
                 this.points[i] = point
             }
-            this.drawLine(ctx, canvas)
+            this.drawLine(ctx)
             ctx.closePath()
         }
         setSize(canvas: CanvasElementProperty): void {
@@ -150,7 +149,7 @@ export default withDefaultProps(
                 p.x += p.vx
             } else if (point.y <= 0 || point.y >= canvas.height) {
                 p.vy = -p.vy
-                p.vy += p.vy
+                p.y += p.vy
             } else {
                 p = {
                     x: p.x + p.vx,
@@ -163,31 +162,33 @@ export default withDefaultProps(
             return p
         }
 
-        drawLine(ctx: CanvasRenderingContext2D, canvase: CanvasElementProperty): void {
+        drawLine(ctx: CanvasRenderingContext2D): void {
             ctx = ctx
             const mouse = this.mouse
             let dist
             for(let i=0, len = this.props.count; i < len; i++) {
-                this.points[i].maxConn = 0
+                const pointI = this.points[i]
+                pointI.maxConn = 0
                 for (let j = 0; j < len; j++) {
                     if(i !== j) {
+                        const pointJ = this.points[j]
                         dist = 
-                            Math.round(this.points[i].x - this.points[j].x) *
-                                Math.round(this.points[i].x - this.points[j].x) +
-                            Math.round(this.points[i].y - this.points[j].y) *
-                                Math.round(this.points[i].y - this.points[j].y)
+                            Math.round(pointI.x - pointJ.x) *
+                                Math.round(pointI.x - pointJ.x) +
+                            Math.round(pointI.y - pointJ.y) *
+                                Math.round(pointI.y - pointJ.y)
                         // 两点距离小于吸附距离，而且小于最大连接数，则画线
                         if(
                             dist <= this.props.dist &&
-                            this.points[i].maxConn < this.props.maxConn
+                            pointI.maxConn < this.props.maxConn
                         ) {
-                            this.points[i].maxConn++
+                            pointI.maxConn++
                             // 距离越远，线条越细，而且越透明
                             ctx.lineWidth = 0.5 - dist / this.props.dist
                             ctx.strokeStyle = `rgba(${this.props.stroke},${1-dist/this.props.dist})`
                             ctx.beginPath()
-                            ctx.moveTo(this.points[i].x, this.points[i].y)
-                            ctx.lineTo(this.points[j].x, this.points[j].y)
+                            ctx.moveTo(pointI.x, pointI.y)
+                            ctx.lineTo(pointJ.x, pointJ.y)
                             ctx.stroke()
                         }
                     }
@@ -195,22 +196,22 @@ export default withDefaultProps(
                 // 如果鼠标进入画布
                 if(mouse) {
                     dist = 
-                        Math.round(this.points[i].x - mouse.x) *
-                            Math.round(this.points[i].x - mouse. x) + 
-                        Math.round(this.points[i].y - mouse.y) *
-                            Math.round(this.points[i].y - mouse. y)
+                        Math.round(pointI.x - mouse.x) *
+                            Math.round(pointI.x - mouse. x) + 
+                        Math.round(pointI.y - mouse.y) *
+                            Math.round(pointI.y - mouse. y)
                     // 遇到鼠标吸附距离时加速，直接改变point的x, y值达到加速效果
                     if(dist > this.props.dist && dist <= this.props.eDist) {
-                        this.points[i].x = 
-                            this.points[i].x + (mouse.x - this.points[i].x) / 20
-                        this.points[i].y = 
-                            this.points[i].y + (mouse.y - this.points[i].y) / 20
+                        pointI.x = 
+                            pointI.x + (mouse.x - pointI.x) / 20
+                        pointI.y = 
+                            pointI.y + (mouse.y - pointI.y) / 20
                     }
                     if(dist <= this.props.eDist) {
                         ctx.lineWidth = 1
                         ctx.strokeStyle = `rgba(${this.props.stroke}, ${1-dist/this.props.eDist})`
                         ctx.beginPath()
-                        ctx.moveTo(this.points[i].x, this.points[i].y)
+                        ctx.moveTo(pointI.x, pointI.y)
                         ctx.lineTo(mouse.x, mouse.y)
                         ctx.stroke()
                     }

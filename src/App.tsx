@@ -32,6 +32,7 @@ export default function App(): ReactElement {
     <ConnectedRouter history={history}>
       <ThemeContext.Provider value={{theme, setTheme}}>
         <Layout>
+          <Background color={ theme==='light' ? "0, 0, 0":"0, 168, 255"} stroke={ theme==='light' ? "0, 0, 0":"0, 168, 255"}/>
           <Sider collapsed={collapsed}>
             {
               navList.map(elem => {
@@ -50,9 +51,9 @@ export default function App(): ReactElement {
               })
             }
           </Sider>
-          <Content collapsed={collapsed} setCollapsed={setCollapsed}>
-            <Background color="0, 0, 0"/>
+          <Content collapsed={collapsed} setCollapsed={setCollapsed} style={theme==='light' ? {background: "#b598a1"} : {background: "#353b48"}}>
             <Switch>
+              <Route path="/" component={PersonalInfo} />
               <Route path="/login" component={Login} />
               <Route path="/personInfo" component={PersonalInfo} />
               <Route path="/404" component={NotFound} />
