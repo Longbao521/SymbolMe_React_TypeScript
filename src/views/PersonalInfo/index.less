@@ -1,0 +1,29 @@
+.infoTitle {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#baseContainer {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+
+    span {
+        display: block;
+        margin-top: 2vh;
+        width: 30vw;
+        text-indent: 4em;
+        letter-spacing: 0.2em;
+        font: bold 1.2em 'Poppins',sans-serif;
+    }
+
+    span:nth-of-type(odd) {
+        width: 60%;
+        padding-left: 20px;
+    }
+
+    span:nth-of-type(even) {
+        width: 40%;
+    }
+}

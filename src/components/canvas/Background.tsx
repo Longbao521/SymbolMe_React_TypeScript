@@ -86,10 +86,7 @@ export default withDefaultProps(
             }
         }
         handleMouseLeave(): void {
-            this.mouse = {
-                x: 0,
-                y: 0,
-            }
+            this.mouse = null
         }
         drawPoint(canvas: CanvasElementProperty): void {
             const { ctx } = this.state

@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-14 08:25:31
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-22 09:05:24
+ * @LastEditTime: 2020-05-24 10:53:52
  -->
 # my-app-ts
 
@@ -63,3 +63,7 @@
         ]
     }
     ```
+11. 5.23
+    +     完成axios请求， mock响应数据
+12. 5.24
+    +     完成Card模块，完成个人信息页面的实现
