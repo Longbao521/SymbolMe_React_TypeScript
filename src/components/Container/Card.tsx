@@ -24,7 +24,7 @@ export default function Card(): ReactElement {
         <div className="Card">
             {
                 info.map(elem => (
-                    <div className="box">
+                    <div className="box" key={elem.name}>
                         <div className="imgBx">
                             <img src={elem.src} />
                         </div>

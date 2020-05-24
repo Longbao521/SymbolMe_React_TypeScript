@@ -4,7 +4,7 @@ import { Layout, Menu, Button } from 'antd';
 // 引入路由
 import { Route, Link, Redirect, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
-import { Login, PersonalInfo, NotFound } from './views'
+import { Login, PersonalInfo, NotFound, CesiumViewer } from './views'
 import history from './stores/history'
 // 引入组件
 import { PhotoContainer, Sider, Content, Background } from './components'
@@ -30,9 +30,9 @@ export default function App(): ReactElement {
   // }})
   return (
     <ConnectedRouter history={history}>
-      <ThemeContext.Provider value={{theme, setTheme}}>
+      <ThemeContext.Provider value={{ theme, setTheme }}>
         <Layout>
-          <Background color={ theme==='light' ? "0, 0, 0":"0, 168, 255"} stroke={ theme==='light' ? "0, 0, 0":"0, 168, 255"}/>
+          <Background color={theme === 'light' ? "0, 0, 0" : "0, 168, 255"} stroke={theme === 'light' ? "0, 0, 0" : "0, 168, 255"} />
           <Sider collapsed={collapsed}>
             {
               navList.map(elem => {
@@ -51,13 +51,15 @@ export default function App(): ReactElement {
               })
             }
           </Sider>
-          <Content collapsed={collapsed} setCollapsed={setCollapsed} style={theme==='light' ? {background: "#b598a1"} : {background: "#353b48"}}>
+          <Content collapsed={collapsed} setCollapsed={setCollapsed} style={theme === 'light' ? { background: "#b598a1" } : { background: "#353b48" }}>
             <Switch>
-              <Route path="/" component={PersonalInfo} />
-              <Route path="/login" component={Login} />
-              <Route path="/personInfo" component={PersonalInfo} />
-              <Route path="/404" component={NotFound} />
-              <Redirect to="/404" />
+              <Route path="/" component={PersonalInfo}>
+                <Route path="/login" component={Login} />
+                <Route path="/personInfo" component={PersonalInfo} />
+                <Route path="/cesium" component={CesiumViewer} />
+                <Route path="/404" component={NotFound} />
+                <Redirect to="/404" />
+              </Route>
             </Switch>
           </Content>
         </Layout>

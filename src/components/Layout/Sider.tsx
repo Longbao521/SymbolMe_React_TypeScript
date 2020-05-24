@@ -5,6 +5,7 @@ import { PhotoContainer } from '../index'
 import logoImg from '../../assets/img/login.svg'
 import { ThemeContext } from '../../context';
 
+import './Sider.less'
 
 interface Props {
   children: ReactChild | ReactChild[];
