@@ -93,8 +93,9 @@ function getClientEnvironment(publicUrl) {
       env[key] = JSON.stringify(raw[key]);
       return env;
     }, {}),
+    //FIXME:解决 CESIUM_BASE_URL错误处理
+    CESIUM_BASE_URL:JSON.stringify('')
   };
-
   return { raw, stringified };
 }
 

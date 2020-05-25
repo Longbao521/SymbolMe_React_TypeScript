@@ -26,6 +26,11 @@ const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 
 const postcssNormalize = require('postcss-normalize');
+// FIXME:引入CopyPlugin
+const CopyPlugin = require('copy-webpack-plugin');
+// FIXME:定义路径
+const cesiumSource = 'node_modules/cesium/Source';
+const cesiumWorkers = '../Build/Cesium/Workers';
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -77,11 +82,9 @@ module.exports = function (webpackEnv) {
         loader: MiniCssExtractPlugin.loader,
         // css is located in `static/css`, use '../../' to locate index.html folder
         // in production `paths.publicUrlOrPath` can be a relative path
-        options: paths.publicUrlOrPath.startsWith('.') ?
-          {
-            publicPath: '../../'
-          } :
-          {},
+        options: paths.publicUrlOrPath.startsWith('.') ? {
+          publicPath: '../../'
+        } : {},
       },
       {
         loader: require.resolve('css-loader'),
@@ -139,8 +142,7 @@ module.exports = function (webpackEnv) {
     devtool: isEnvProduction ?
       shouldUseSourceMap ?
       'source-map' :
-      false :
-      isEnvDevelopment && 'cheap-module-source-map',
+      false : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
@@ -163,6 +165,8 @@ module.exports = function (webpackEnv) {
       // changing JS code would still trigger a refresh.
     ].filter(Boolean),
     output: {
+      //FIXME:正常缩进 
+      sourcePrefix: ' ',
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
       // Add /* filename */ comments to generated require()s in the output.
@@ -170,14 +174,12 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction ?
-        'static/js/[name].[contenthash:8].js' :
-        isEnvDevelopment && 'static/js/bundle.js',
+        'static/js/[name].[contenthash:8].js' : isEnvDevelopment && 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction ?
-        'static/js/[name].[contenthash:8].chunk.js' :
-        isEnvDevelopment && 'static/js/[name].chunk.js',
+        'static/js/[name].[contenthash:8].chunk.js' : isEnvDevelopment && 'static/js/[name].chunk.js',
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -187,8 +189,7 @@ module.exports = function (webpackEnv) {
         info =>
         path
         .relative(paths.appSrc, info.absoluteResourcePath)
-        .replace(/\\/g, '/') :
-        isEnvDevelopment &&
+        .replace(/\\/g, '/') : isEnvDevelopment &&
         (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
       // Prevents conflicts when multiple webpack runtimes (from different apps)
       // are used on the same page.
@@ -196,6 +197,10 @@ module.exports = function (webpackEnv) {
       // this defaults to 'window', but by setting it to 'this' then
       // module chunks which are built will work in web workers as well.
       globalObject: 'this',
+    },
+    // FIXME:确保weback更友好的使用require引入cesium
+    amd: {
+      toUrlUndefined: true
     },
     optimization: {
       minimize: isEnvProduction,
@@ -245,16 +250,14 @@ module.exports = function (webpackEnv) {
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
             parser: safePostCssParser,
-            map: shouldUseSourceMap ?
-              {
-                // `inline: false` forces the sourcemap to be output into a
-                // separate file
-                inline: false,
-                // `annotation: true` appends the sourceMappingURL to the end of
-                // the css file, helping the browser find the sourcemap
-                annotation: true,
-              } :
-              false,
+            map: shouldUseSourceMap ? {
+              // `inline: false` forces the sourcemap to be output into a
+              // separate file
+              inline: false,
+              // `annotation: true` appends the sourceMappingURL to the end of
+              // the css file, helping the browser find the sourcemap
+              annotation: true,
+            } : false,
           },
           cssProcessorPluginOptions: {
             preset: ['default', {
@@ -300,6 +303,8 @@ module.exports = function (webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        // FIXME: 解析模块
+        cesium: path.resolve(cesiumSource),
         // Allows for better profiling with ReactDevTools
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
@@ -316,7 +321,7 @@ module.exports = function (webpackEnv) {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        // new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       ],
     },
     resolveLoader: {
@@ -327,6 +332,9 @@ module.exports = function (webpackEnv) {
       ],
     },
     module: {
+      // FIXME:可以使用require
+      unknownContextCritical: /^.\/.*$/,
+      unknownContextCritical: false,
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
@@ -540,14 +548,27 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      // FIXME: 拷贝Cesium Assets, Widgets, and Workers 到一个静态文件夹
+      new CopyPlugin({
+        patterns: [
+          { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
+          { from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
+          { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' },
+        ],
+        options: {
+          concurrency: 100,
+        },
+      }),
+      new webpack.DefinePlugin({
+        CESIUM_BASE_URL: JSON.stringify('./')
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign({}, {
             inject: true,
             template: paths.appHtml,
           },
-          isEnvProduction ?
-          {
+          isEnvProduction ? {
             minify: {
               removeComments: true,
               collapseWhitespace: true,
@@ -662,11 +683,9 @@ module.exports = function (webpackEnv) {
         useTypescriptIncrementalApi: true,
         checkSyntacticErrors: true,
         resolveModuleNameModule: process.versions.pnp ?
-          `${__dirname}/pnpTs.js` :
-          undefined,
+          `${__dirname}/pnpTs.js` : undefined,
         resolveTypeReferenceDirectiveModule: process.versions.pnp ?
-          `${__dirname}/pnpTs.js` :
-          undefined,
+          `${__dirname}/pnpTs.js` : undefined,
         tsconfig: paths.appTsConfig,
         reportFiles: [
           '**',
