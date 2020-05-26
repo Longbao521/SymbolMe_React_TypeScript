@@ -1,23 +1,31 @@
 import React, { ReactElement, ReactChild, useState, useEffect } from 'react'
-import { Divider } from 'antd'
+import { Divider, Tag } from 'antd'
 import { ThemeContext } from '../../context'
 import { Color } from '../../constant'
-import { SkillInfo } from '../../services/type';
+import { SkillInfo, TagInfo } from '../../services/type';
 import request from '../../services/api';
 
 import './index.less'
 
 export default function index(): ReactElement {
-    const [ skillInfos, setSkillInfos ] = useState<Array<SkillInfo>>([])
+    const [skillInfos, setSkillInfos] = useState<Array<SkillInfo>>([])
+    const [tagInfos, setTagInfos] = useState<Array<TagInfo>>([])
     useEffect(() => {
-        (async function(): Promise<void> {
-            const {status, data} = await request.get('/api/skillInfo')
-            if(status === 200) {
+        (async function (): Promise<void> {
+            const { status, data } = await request.get('/api/skillInfo')
+            if (status === 200) {
                 setSkillInfos(data)
             }
         })()
     }, [])
-
+    useEffect(() => {
+        (async function (): Promise<void> {
+            const { status, data } = await request.get('/api/tagInfo')
+            if (status === 200) {
+                setTagInfos(data)
+            }
+        })()
+    }, [])
     return (
         <ThemeContext.Consumer>
             {
@@ -33,7 +41,14 @@ export default function index(): ReactElement {
                             {
                                 // 使用React中的v-html
                                 skillInfos.map(elem => (
-                                    <p dangerouslySetInnerHTML={{__html:elem.html}} key={elem.id}></p>
+                                    <p dangerouslySetInnerHTML={{ __html: elem.html }} key={elem.id}></p>
+                                ))
+                            }
+                        </div>
+                        <div className="tagContainer">
+                            {
+                                tagInfos.map (tag => (
+                                    <Tag color={tag.color} key={tag.id}>{tag.text}</Tag>
                                 ))
                             }
                         </div>

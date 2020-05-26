@@ -8,3 +8,9 @@ export interface SkillInfo {
     id: string;
     html: string;
 }
+
+export interface TagInfo {
+    id: string;
+    text: string;
+    color: string;
+}
