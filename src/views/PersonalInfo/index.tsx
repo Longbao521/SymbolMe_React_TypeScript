@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-16 06:56:20
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-24 09:46:46
+ * @LastEditTime: 2020-05-26 06:47:30
  */
 import React, { ReactElement, useEffect, useState, ReactChild } from 'react'
 import { Divider } from 'antd'
@@ -12,6 +12,7 @@ import { InfoType } from '../../services/type';
 import request from '../../services/api'
 import { ThemeContext } from '../../context'
 import { Card } from '../../components'
+import { Color } from '../../constant'
 
 import './index.less'
 
@@ -33,15 +34,15 @@ export default function index(): ReactElement {
             {
                 ({ theme, setTheme }): ReactChild => (
                     <>
-                        <h3 className="infoTitle" style={theme=== 'light' ? { color: '#36292f'}: { color: '#eccc68'}}>关于我 | About Me</h3>
+                        <h3 className="infoTitle" style={theme=== 'light' ? { color: Color.textLightColor}: { color: Color.textNightColor}}>关于我 | About Me</h3>
                         <div id="baseInfoConatiner">
-                            <Divider orientation="left" plain style={theme=== 'light' ? { color: '#36292f'}: { color: '#eccc68'}}>
+                            <Divider orientation="left" plain style={theme=== 'light' ? { color: Color.textLightColor}: { color: Color.textNightColor}}>
                                 基本信息
                             </Divider>
                             <div id="baseContainer">
                                 {
                                     data.map(elem => (
-                                        <span key={elem.key}  style={theme=== 'light' ? { color: '#36292f'}: { color: '#eccc68'}}>{elem.key}:&nbsp;{elem.value}</span>
+                                        <span key={elem.key}  style={theme=== 'light' ? { color: Color.textLightColor}: { color: Color.textNightColor}}>{elem.key}:&nbsp;{elem.value}</span>
                                     ))
                                 }
                                 <span></span>

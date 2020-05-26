@@ -3,3 +3,8 @@ export interface InfoType {
     key: string;
     value: string;
 }
+
+export interface SkillInfo {
+    id: string;
+    html: string;
+}
