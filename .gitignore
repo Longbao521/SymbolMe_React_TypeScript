@@ -16,6 +16,7 @@
 
 # 隐私数据
 /mock/db.json
+/mock/static
 
 # misc
 .DS_Store
