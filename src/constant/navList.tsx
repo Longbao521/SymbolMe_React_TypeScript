@@ -10,7 +10,9 @@ const navList = [
     {
         key: '2', path: '/project', icon: <MyIcon type="icon-xiangmu" />, text: '项目经历', children: [
             { key: '2.1', path: '/project/deepEarth', text: '深时地球' },
-            { key: '2.2', path: '/project/DDG', text: '全球离散格网' },
+            { key: '2.2', path: '/project/video', text: '视频与三维虚实融合' },
+            { key: '2.3', path: '/project/earth', text: '全息地球' },
+            { key: '2.4', path: '/project/DDG', text: '全球离散格网' },
         ]
     },
     { key: '3', path: '/skill', icon: <MyIcon type="icon-jishu" />, text: '技术栈' },

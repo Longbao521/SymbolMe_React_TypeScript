@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-14 08:25:31
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-26 10:44:30
+ * @LastEditTime: 2020-05-28 09:15:57
  -->
 # my-app-ts
 
@@ -71,3 +71,7 @@
     +     修改夜晚模式侧边栏的样式，修改webpack配置可以使用Cesium(Require),修改部分在config文件夹下的webpack.config.js与env.js,使用FIXME:标明
 14. 5.26
     +     完成部分技能页面(使用dangerouslySetInnerHTML, 后期考虑检查，以防XSS攻击), 改善路由，剥离出routes文件夹
+15. 5.27
+    +     完善个人页面，改善mock server，实现静态文件视频的传输
+16. 5.28
+    +     配置mock-server跨域，初步完成深时地球页面，cesium初始影像更换

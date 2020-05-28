@@ -4,7 +4,6 @@ import { Layout, Menu, Button } from 'antd';
 // 引入路由
 import { Route, Link, Redirect, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
-import { Login, PersonalInfo, NotFound, CesiumViewer, Skill } from './views'
 import history from './stores/history'
 import {mainRouter} from './routes'
 // 引入组件
@@ -41,7 +40,7 @@ export default function App(): ReactElement {
                   <SubMenu key={elem.key} icon={elem.icon} title={elem.text}>
                     {
                       elem.children.map(elemChild => (
-                        <Menu.Item key={elemChild.key}>{elemChild.text}</Menu.Item>
+                        <Menu.Item key={elemChild.key}><Link to={elemChild.path}>{elemChild.text}</Link></Menu.Item>
                       ))
                     }
                   </SubMenu>

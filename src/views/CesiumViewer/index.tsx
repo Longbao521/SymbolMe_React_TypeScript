@@ -8,9 +8,16 @@ export default class CesiumViewer extends Component{
 
   componentDidMount() {
     Cesium.Ion.defaultAccessToken = 'your_access_token';
+    const guge=new Cesium.UrlTemplateImageryProvider({            	
+      url:'http://www.google.cn/maps/vt?lyrs=s@800&x={x}&y={y}&z={z}',  
+      tilingScheme:new Cesium.WebMercatorTilingScheme(),            	
+      minimumLevel:1,            
+      maximumLevel:20        
+    }); 
     const viewer = new Cesium.Viewer('scene', {
       animation: false, // 是否创建动画小器件，左下角仪表
       baseLayerPicker: false, // 是否显示图层选择器
+      imageryProvider : guge,
       fullscreenButton: false, // 是否显示全屏按钮
       geocoder: false, // 是否显示geocoder小器件，右上角查询按钮
       homeButton: false, // 是否显示Home按钮
