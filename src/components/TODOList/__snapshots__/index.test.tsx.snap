@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="todo-list"
+>
+  <div>
+    <span
+      className="item-text "
+    >
+      first
+    </span>
+    <div>
+      <button
+        onClick={[Function]}
+      >
+        this.props.children
+      </button>
+    </div>
+  </div>
+  <div>
+    <span
+      className="item-text "
+    >
+      second
+    </span>
+    <div>
+      <button
+        onClick={[Function]}
+      >
+        this.props.children
+      </button>
+    </div>
+  </div>
+</div>
+`;
