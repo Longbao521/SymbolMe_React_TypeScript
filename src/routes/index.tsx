@@ -1,4 +1,4 @@
-import { Login, PersonalInfo, NotFound, CesiumViewer, Skill, DeepEarth, Video3D } from '../views'
+import { Login, PersonalInfo, NotFound, CesiumViewer, Skill, DeepEarth, Video3D, Editor } from '../views'
 
 export const mainRouter = [{
     pathname: '/login',
@@ -21,6 +21,9 @@ export const mainRouter = [{
 }, {
     pathname: '/project/video3D',
     component: Video3D
+}, {
+    pathname: '/blog/editor',
+    component: Editor
 }]
 // FIXME:后期增加权限认证
 export const adminRouter = [{

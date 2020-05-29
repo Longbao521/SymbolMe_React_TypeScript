@@ -16,7 +16,11 @@ const navList = [
         ]
     },
     { key: '3', path: '/skill', icon: <MyIcon type="icon-jishu" />, text: '技术栈' },
-    { key: '4', path: '/blog', icon: <MyIcon type="icon-bokeyuan" />, text: '博客' },
+    { 
+        key: '4', path: '/blog', icon: <MyIcon type="icon-bokeyuan" />, text: '博客', children: [
+            { key: '4.1', path: '/blog/editor', text: '上传博客' }
+        ] 
+    },
     { key: '5', path: '/cesium', icon: <MyIcon type="icon-diqiu" />, text: 'Cesium平台' },
 ]
 // export default不能像export一样放在变量声明前面
