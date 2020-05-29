@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-27 07:59:27
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-28 07:08:18
+ * @LastEditTime: 2020-05-29 06:56:05
  */ 
 const jsonServer = require('json-server');
 const fs = require('fs')
@@ -15,9 +15,7 @@ const server = jsonServer.create();
 const middlewares = jsonServer.defaults({ noCors: false });
 server.use(middlewares);
 
-// 自定义请求, 必须要放到自定义路由之前
-server.get('/api/project/deepEarth', (req, res) => {
-    const path = __dirname + '/static/video/deepEarth.MP4';
+function getVideo(path, req, res) {
     const stat = fs.statSync(path);
     const fileSize = stat.size;
     const range = req.headers.range;
@@ -50,7 +48,18 @@ server.get('/api/project/deepEarth', (req, res) => {
         res.writeHead(200, head);
         fs.createReadStream(path).pipe(res);
     }
+}
+
+// 自定义请求, 必须要放到自定义路由之前
+server.get('/api/project/deepEarth', (req, res) => {
+    const path = __dirname + '/static/video/deepEarth.MP4';
+   getVideo(path, req, res)
 })
+server.get('/api/project/video3D', (req, res) => {
+    const path = __dirname + '/static/video/video3D.MP4';
+   getVideo(path, req, res)
+})
+
 server.use(jsonServer.rewriter($routeHandler));  // 使用自定义路由
 
 const router = jsonServer.router($db);

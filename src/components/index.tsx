@@ -1,5 +1,6 @@
 export { default as PhotoContainer } from './Container/Photo'
 export { default as Card } from './Container/Card'
+export { default as VideoContainer } from './Container/Video'
 export { default as Sider } from './Layout/Sider'
 export { default as Content } from './Layout/Content'
 export { default as Background } from './canvas/Background'
