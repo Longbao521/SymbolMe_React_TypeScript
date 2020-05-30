@@ -1,4 +1,4 @@
-import { Login, PersonalInfo, NotFound, CesiumViewer, Skill, DeepEarth, Video3D, Editor } from '../views'
+import { Login, PersonalInfo, NotFound, CesiumViewer, Skill, DeepEarth, Video3D, Earth, GlobeGrid, Editor } from '../views'
 
 export const mainRouter = [{
     pathname: '/login',
@@ -22,6 +22,12 @@ export const mainRouter = [{
     pathname: '/project/video3D',
     component: Video3D
 }, {
+    pathname: '/project/earth',
+    component: Earth
+},{
+    pathname: '/project/DDG',
+    component: GlobeGrid
+},{
     pathname: '/blog/editor',
     component: Editor
 }]

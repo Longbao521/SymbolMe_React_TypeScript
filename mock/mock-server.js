@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-27 07:59:27
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-29 06:56:05
+ * @LastEditTime: 2020-05-30 18:47:15
  */ 
 const jsonServer = require('json-server');
 const fs = require('fs')
@@ -57,6 +57,14 @@ server.get('/api/project/deepEarth', (req, res) => {
 })
 server.get('/api/project/video3D', (req, res) => {
     const path = __dirname + '/static/video/video3D.MP4';
+   getVideo(path, req, res)
+})
+server.get('/api/project/globeGrid', (req, res) => {
+    const path = __dirname + '/static/video/GlobeGrid.MP4';
+   getVideo(path, req, res)
+})
+server.get('/api/project/IOT', (req, res) => {
+    const path = __dirname + '/static/video/IOT.MP4';
    getVideo(path, req, res)
 })
 

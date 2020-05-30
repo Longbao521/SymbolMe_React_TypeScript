@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-14 08:25:31
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-28 09:15:57
+ * @LastEditTime: 2020-05-29 20:49:40
  -->
 # my-app-ts
 
@@ -75,3 +75,5 @@
     +     完善个人页面，改善mock server，实现静态文件视频的传输
 16. 5.28
     +     配置mock-server跨域，初步完成深时地球页面，cesium初始影像更换
+17. 5.29
+    +     完成视频容器模块的拆分，完成博客上传首页的初始化
