@@ -1,16 +1,21 @@
-.md-editor {
+@height: 0.8vh;
+.blog-editor {
     position: relative;
     z-index: 3;
-    height: 94vh;
-    background-color: rgba(230, 210, 213, 0.7);
-    margin: 1vh;
-
-    .md-editor-content {
-        height: 95%;
+    .md-editor {
+        height: 94vh;
+        background-color: rgba(230, 210, 213, 0.7);
+        margin: @height;
+    
+        .md-editor-content {
+            height: 95%;
+        }
     }
-}
-
-.submit-btn {
-    position: absolute;
-    top: 6vh;
+    
+    .submit-btn {
+        position: absolute;
+        top: calc( @height - 0.6vh );
+        right: 8vw;
+        font-size: 0.5rem;
+    }
 }

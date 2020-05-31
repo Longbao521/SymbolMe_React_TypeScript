@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-27 07:59:27
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-30 18:47:15
+ * @LastEditTime: 2020-05-31 07:20:30
  */ 
 const jsonServer = require('json-server');
 const fs = require('fs')
@@ -66,6 +66,10 @@ server.get('/api/project/globeGrid', (req, res) => {
 server.get('/api/project/IOT', (req, res) => {
     const path = __dirname + '/static/video/IOT.MP4';
    getVideo(path, req, res)
+})
+
+server.post('/api/blog/upload/:class/:title', (req, res) => {
+    console.log(req.params)
 })
 
 server.use(jsonServer.rewriter($routeHandler));  // 使用自定义路由
