@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-14 08:25:31
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-29 20:49:40
+ * @LastEditTime: 2020-05-31 16:06:37
  -->
 # my-app-ts
 
@@ -77,3 +77,7 @@
     +     配置mock-server跨域，初步完成深时地球页面，cesium初始影像更换
 17. 5.29
     +     完成视频容器模块的拆分，完成博客上传首页的初始化
+18. 5.31
+    +     对editor页面的useEffect进行改善，返现引进模块的问题，并更改，实践useEffect中的解绑以及优化
+    +     完成博客上传页的基本逻辑，如消息提示，草稿保存(使用Ctrl+S将正在编辑的博客保存为草稿，切换页面或重新打开页面重新恢复草稿)
+    +     修改mock-server，实现博客的保存与分类

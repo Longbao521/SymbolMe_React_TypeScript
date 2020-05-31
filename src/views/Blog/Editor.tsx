@@ -1,11 +1,12 @@
 import React, { ReactElement, useState, useEffect } from 'react'
-import './Editor.less'
-import { Button, notification } from 'antd';
+import { Button, notification, Input } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
+import { AlertBox } from '../../components'
 import "react-mde/lib/styles/css/react-mde-all.css";
-
+import './Editor.less'
+import request from '../../services/api'
 const converter = new Showdown.Converter({
     tables: true,
     simplifiedAutoLink: true,
@@ -14,20 +15,44 @@ const converter = new Showdown.Converter({
 });
 
 export default function Editor(): ReactElement {
-    const [markdown, setMarkDown] = useState<string>('# React')
+    // 从缓存中得到初始内容， FIXME:提示用户切换页面要用Ctrl+S保存
+    const historyContent: string | null = window.localStorage.getItem('history')
+    const [markdown, setMarkDown] = useState<string>(historyContent ? historyContent : '')
+    const [selectedTab, setSelectedTab] = useState<"write" | "preview">("write");
+    const [modalVisible, setModalVisible] = useState<boolean>(false)
+    const [modalLoading, setModalLoading] = useState<boolean>(false)
+    const [blogClass, setBlogClass] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
+
     const handleSubmit = (): void => {
-        console.log(markdown)
+        setModalVisible(true)
     }
     const handleChange = (value: string): void => {
-        console.log(value)
-        console.log(markdown)
         setMarkDown(value)
+    }
+    const onOk = async(): Promise<void> => {
+        const {data, status} = await request.post(`/api/blog/upload/${blogClass}/${title}`, {markdown})
+        if(status === 200) {
+            setModalVisible(false)
+            setModalVisible(false)
+            notification.open({
+                message: '保存成功',
+                description:
+                    '博客已保存 .',
+                icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+            });
+        } 
+    }
+    const onCancel = (): void => {
+        setModalVisible(false)
+        console.log('cancel')
     }
     const handleSave = (event: KeyboardEvent): void => {
         if (event.key === 's' && event.ctrlKey) {
             // 阻止原生的保存网页的行为
             event.preventDefault()
-            // 提示保存陈宫
+            window.localStorage.setItem('history', markdown)
+            // 提示保存成功
             notification.open({
                 message: '保存成功',
                 description:
@@ -39,7 +64,6 @@ export default function Editor(): ReactElement {
     useEffect(() => {
         // 监听器的注册于取消必须使用相同的外部函数，切不能赋参数
         document.addEventListener('keydown', handleSave)
-        console.log(markdown)
         // 删除监听事件,会在每一次调用时删除
         return (): void => {
             document.removeEventListener('keydown', handleSave)
@@ -51,11 +75,18 @@ export default function Editor(): ReactElement {
             <ReactMde
                 value={markdown}
                 onChange={handleChange}
-                generateMarkdownPreview={markdown =>
+                selectedTab={selectedTab}
+                onTabChange={setSelectedTab}
+                generateMarkdownPreview={(markdown): Promise<string> =>
                     Promise.resolve(converter.makeHtml(markdown))
                 }
             />
             <Button type="primary" className="submit-btn" onClick={handleSubmit}>submit</Button>
+            <AlertBox visible={modalVisible} title="提交博客" onOk={onOk} onCancel={onCancel} loading={modalLoading}>
+                {/**FIXME:修改这里的冲突 */}
+                <Input defaultValue="输入一个分类:(如React)" value={blogClass} onChange={(event): void=> setBlogClass(event.currentTarget.value)}/>
+                <Input defaultValue="输入一个标题:(如Hook)" value={title} onChange={(event): void=> setTitle(event.currentTarget.value)}/>
+            </AlertBox>
         </div>
     )
 }

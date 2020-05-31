@@ -2,20 +2,30 @@
 .blog-editor {
     position: relative;
     z-index: 3;
-    .md-editor {
+    .react-mde {
         height: 94vh;
-        background-color: rgba(230, 210, 213, 0.7);
         margin: @height;
-    
-        .md-editor-content {
-            height: 95%;
+        display: flex;
+        flex-direction: column;
+        .mde-textarea-wrapper {
+            height: 100%;
+        }
+        .mde-text {
+            height: 100% !important;
         }
     }
-    
     .submit-btn {
         position: absolute;
-        top: calc( @height - 0.6vh );
-        right: 8vw;
+        top: @height;
+        right: 1vw;
         font-size: 0.5rem;
+    }
+    div:nth-of-type(2) {
+        height: 100vh;
+    }
+}
+.ant-modal-body {
+    input {
+        margin: 1vh;
     }
 }
