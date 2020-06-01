@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-14 08:25:31
  * @LastEditors: liyulong
- * @LastEditTime: 2020-06-01 09:14:54
+ * @LastEditTime: 2020-06-01 10:02:18
  -->
 # my-app-ts
 
@@ -83,3 +83,4 @@
     +     修改mock-server，实现博客的保存与分类
 19. 6.1
     +     使用grid布局初始化博客首页
+    +     使用Portals将Canvas组件放于body下

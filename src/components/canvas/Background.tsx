@@ -1,6 +1,7 @@
 import React, { Component, RefObject, MouseEvent } from 'react'
 import { withDefaultProps } from '../../utils';
 import './Background.less'
+import { createPortal } from 'react-dom'
 
 const defaultProps = {
     vx: 4,
@@ -114,8 +115,8 @@ export default withDefaultProps(
                 ctx.fillRect( // 利用矩形绘制点
                     point.x - this.props.width / 2,
                     point.y - this.props.height / 2,
-                    this.props.width+2, // 增大像素点
-                    this.props.height+2
+                    this.props.width + 2, // 增大像素点
+                    this.props.height + 2
                 )
 
                 this.points[i] = point
@@ -141,7 +142,7 @@ export default withDefaultProps(
             if (!canvas) {
                 return p
             }
-            if(point.x <= 0 || point.x >= canvas.width) {
+            if (point.x <= 0 || point.x >= canvas.width) {
                 p.vx = -p.vx
                 p.x += p.vx
             } else if (point.y <= 0 || point.y >= canvas.height) {
@@ -150,7 +151,7 @@ export default withDefaultProps(
             } else {
                 p = {
                     x: p.x + p.vx,
-                    y: p.y+ p.vy,
+                    y: p.y + p.vy,
                     vx: p.vx,
                     vy: p.vy,
                     maxConn: 0
@@ -163,26 +164,26 @@ export default withDefaultProps(
             ctx = ctx
             const mouse = this.mouse
             let dist
-            for(let i=0, len = this.props.count; i < len; i++) {
+            for (let i = 0, len = this.props.count; i < len; i++) {
                 const pointI = this.points[i]
                 pointI.maxConn = 0
                 for (let j = 0; j < len; j++) {
-                    if(i !== j) {
+                    if (i !== j) {
                         const pointJ = this.points[j]
-                        dist = 
+                        dist =
                             Math.round(pointI.x - pointJ.x) *
-                                Math.round(pointI.x - pointJ.x) +
+                            Math.round(pointI.x - pointJ.x) +
                             Math.round(pointI.y - pointJ.y) *
-                                Math.round(pointI.y - pointJ.y)
+                            Math.round(pointI.y - pointJ.y)
                         // 两点距离小于吸附距离，而且小于最大连接数，则画线
-                        if(
+                        if (
                             dist <= this.props.dist &&
                             pointI.maxConn < this.props.maxConn
                         ) {
                             pointI.maxConn++
                             // 距离越远，线条越细，而且越透明
                             ctx.lineWidth = 0.5 - dist / this.props.dist
-                            ctx.strokeStyle = `rgba(${this.props.stroke},${1-dist/this.props.dist})`
+                            ctx.strokeStyle = `rgba(${this.props.stroke},${1 - dist / this.props.dist})`
                             ctx.beginPath()
                             ctx.moveTo(pointI.x, pointI.y)
                             ctx.lineTo(pointJ.x, pointJ.y)
@@ -191,22 +192,22 @@ export default withDefaultProps(
                     }
                 }
                 // 如果鼠标进入画布
-                if(mouse) {
-                    dist = 
+                if (mouse) {
+                    dist =
                         Math.round(pointI.x - mouse.x) *
-                            Math.round(pointI.x - mouse. x) + 
+                        Math.round(pointI.x - mouse.x) +
                         Math.round(pointI.y - mouse.y) *
-                            Math.round(pointI.y - mouse. y)
+                        Math.round(pointI.y - mouse.y)
                     // 遇到鼠标吸附距离时加速，直接改变point的x, y值达到加速效果
-                    if(dist > this.props.dist && dist <= this.props.eDist) {
-                        pointI.x = 
+                    if (dist > this.props.dist && dist <= this.props.eDist) {
+                        pointI.x =
                             pointI.x + (mouse.x - pointI.x) / 20
-                        pointI.y = 
+                        pointI.y =
                             pointI.y + (mouse.y - pointI.y) / 20
                     }
-                    if(dist <= this.props.eDist) {
+                    if (dist <= this.props.eDist) {
                         ctx.lineWidth = 1
-                        ctx.strokeStyle = `rgba(${this.props.stroke}, ${1-dist/this.props.eDist})`
+                        ctx.strokeStyle = `rgba(${this.props.stroke}, ${1 - dist / this.props.eDist})`
                         ctx.beginPath()
                         ctx.moveTo(pointI.x, pointI.y)
                         ctx.lineTo(mouse.x, mouse.y)
@@ -217,11 +218,14 @@ export default withDefaultProps(
         }
         render() {
             return (
-                <div className="canvasContainer" ref={this.containerRef} onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseLeave}>
-                    <canvas ref={this.canvasRef}>
-                        您的浏览器不支持canvas，请更换浏览器.
-                </canvas>
-                </div>
+                createPortal(
+                    (<div className="canvasContainer" ref={this.containerRef} onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseLeave}>
+                        <canvas ref={this.canvasRef}>
+                            您的浏览器不支持canvas，请更换浏览器.
+                    </canvas>
+                    </div>), document.body
+                )
+
             )
         }
     })
