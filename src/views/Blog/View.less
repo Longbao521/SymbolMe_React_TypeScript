@@ -1,0 +1,29 @@
+#blog-view {
+    display: grid; // inline-grid是指的父元素是否是内联，而与子元素无关
+    grid-template-columns: repeat(33.3%);
+    grid-template-rows: repeat(33.3%);
+    grid-template-areas: "minHeader midHeader largeHeader" "minContent midContent largeContent" "minFooter midFooter largeFooter";
+    grid-gap: 2vh 2vh;
+    position: relative;
+    z-index: 3;
+
+    .ant-card {
+        height: 30vh;
+        border-radius: 10px;
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.2);
+        background: #abbaab;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #ffffff, #abbaab);
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #ffffff, #abbaab);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    .javascript {
+        grid-column-start: midHeader-start;
+        grid-column-end: largeHeader-end;
+    }
+    .react {
+        grid-row-start:2;
+        grid-row-end: 4;
+    }
+}

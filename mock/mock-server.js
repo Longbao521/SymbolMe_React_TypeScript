@@ -4,7 +4,7 @@
  * @Author: liyulong
  * @Date: 2020-05-27 07:59:27
  * @LastEditors: liyulong
- * @LastEditTime: 2020-05-31 15:57:43
+ * @LastEditTime: 2020-06-01 07:25:41
  */
 const jsonServer = require('json-server');
 const fs = require('fs')
@@ -74,7 +74,7 @@ server.get('/api/project/IOT', (req, res) => {
     getVideo(path, req, res)
 })
 // 必须要用bodyParser才可以用body得到数据
-server.post('/api/blog/upload/:class/:title',bodyParser.json(), (req, res) => {
+server.post('/api/blog/upload1/:class/:title',bodyParser.json(), (req, res) => {
     const params = req.params
     if (params.class && params.title) {
         const folderPath = __dirname + `/static/blog/${params.class}`
@@ -116,9 +116,6 @@ server.use(jsonServer.rewriter($routeHandler)); // 使用自定义路由
 
 const router = jsonServer.router($db);
 server.use(router);
-// Set default middlewares (logger, static, cors and no-cache)
-
-// To handle POST, PUT and PATCH you need to use a body-parser
 
 server.use(jsonServer.bodyParser);
 

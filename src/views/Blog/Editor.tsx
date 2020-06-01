@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import { Button, notification, Input } from 'antd';
-import { SmileOutlined } from '@ant-design/icons';
+import { SmileOutlined, FrownOutlined } from '@ant-design/icons';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import { AlertBox } from '../../components'
@@ -41,11 +41,17 @@ export default function Editor(): ReactElement {
                     '博客已保存 .',
                 icon: <SmileOutlined style={{ color: '#108ee9' }} />,
             });
-        } 
+        } else {
+            notification.open({
+                message: '保存失败',
+                description:
+                    '博客保存失败 .',
+                icon: <FrownOutlined style={{ color: '#108ee9' }} />,
+            });
+        }
     }
     const onCancel = (): void => {
         setModalVisible(false)
-        console.log('cancel')
     }
     const handleSave = (event: KeyboardEvent): void => {
         if (event.key === 's' && event.ctrlKey) {
@@ -83,9 +89,9 @@ export default function Editor(): ReactElement {
             />
             <Button type="primary" className="submit-btn" onClick={handleSubmit}>submit</Button>
             <AlertBox visible={modalVisible} title="提交博客" onOk={onOk} onCancel={onCancel} loading={modalLoading}>
-                {/**FIXME:修改这里的冲突 */}
-                <Input defaultValue="输入一个分类:(如React)" value={blogClass} onChange={(event): void=> setBlogClass(event.currentTarget.value)}/>
-                <Input defaultValue="输入一个标题:(如Hook)" value={title} onChange={(event): void=> setTitle(event.currentTarget.value)}/>
+                {/* defaultValue用于非受控组件，value用于受控组件 */}
+                <Input placeholder="输入一个分类:(如React)" value={blogClass} onChange={(event): void=> setBlogClass(event.currentTarget.value)}/>
+                <Input placeholder="输入一个标题:(如Hook)" value={title} onChange={(event): void=> setTitle(event.currentTarget.value)}/>
             </AlertBox>
         </div>
     )
